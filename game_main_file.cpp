@@ -181,12 +181,33 @@ int spaceship::give_score(){
   return score;
 }
 
+class meteorite{
+  public:
+      void show_meteorite();
+      void set_position(int row, int col);
+  private:
+    int meteorite_row;
+    int meteorite_col;
+};
+
+void meteorite::show_meteorite(){
+  gotoxy(meteorite_row, meteorite_col);
+  cout << "O";
+}
+
+void meteorite::set_position(int row, int col){
+  meteorite_row = row;
+  meteorite_col = col;
+}
+
 int main(int argc, char *argv[])
 {
   // greeting(); not needed in debug
   board game_board;
-  game_board.fill_board();
   spaceship player;
+  meteorite meteor_1;
+  meteor_1.set_position(4,2);
+  game_board.fill_board();
   player.set_score(0);
   player.set_position(0,2);
   bool play = true;
@@ -219,6 +240,7 @@ int main(int argc, char *argv[])
         }
       }
     player.show_spaceship();
+    meteor_1.show_meteorite();
     player.add_score(1);
     Sleep(100);
     clear_screen();
