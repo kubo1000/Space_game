@@ -84,6 +84,10 @@ class spaceship{
     void go_down();
     void go_left();
     void go_right();
+    bool check_right();
+    bool check_left();
+    bool check_up();
+    bool check_down();
     int give_row();
     int give_col();
     void set_score(int num);
@@ -116,6 +120,42 @@ void spaceship::go_right(){
   spaceship_row++;
 }
 
+bool spaceship::check_right(){
+  if(spaceship_row + 1 > 9){
+    return false;
+  }
+  else{
+    return true;
+  }
+}
+
+bool spaceship::check_left(){
+  if(spaceship_row - 1 < 0){
+    return false;
+  }
+  else{
+    return true;
+  }
+}
+
+bool spaceship::check_up(){
+  if(spaceship_col - 1 < 0){
+    return false;
+  }
+  else{
+    return true;
+  }
+}
+
+bool spaceship::check_down(){
+  if(spaceship_col + 1 > 4){
+    return false;
+  }
+  else{
+    return true;
+  }
+}
+
 void spaceship::show_spaceship(){
   gotoxy(spaceship_row, spaceship_col);
   cout << '}';
@@ -143,7 +183,7 @@ int spaceship::give_score(){
 
 int main(int argc, char *argv[])
 {
-  greeting();
+  // greeting(); not needed in debug
   board game_board;
   game_board.fill_board();
   spaceship player;
@@ -154,19 +194,27 @@ int main(int argc, char *argv[])
     game_board.show_board();
     if ( kbhit() ){
         int key_code = getch();
-        if(key_code == 119){ //up
-          player.go_up();
+        if(key_code == 119){
+          if(player.check_up()){
+            player.go_up();
+          }
         }
-        else if(key_code == 115){ // down
-          player.go_down();
+        else if(key_code == 115){
+          if(player.check_down()){
+            player.go_down();
+          }
         }
-        else if(key_code == 100){ // down
-          player.go_right();
+        else if(key_code == 100){
+          if(player.check_right()){
+            player.go_right();
+          }
         }
-        else if(key_code == 97){ // down
-          player.go_left();
+        else if(key_code == 97){
+          if(player.check_left()){
+            player.go_left();
+          }
         }
-        else if(key_code == 27){ // down
+        else if(key_code == 27){
           play = false;
         }
       }
